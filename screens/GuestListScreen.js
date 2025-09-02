@@ -12,6 +12,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {openDatabase} from 'react-native-sqlite-storage';
 import {AuthContext} from '../AuthContext';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 const db = openDatabase({name: 'UserDatabase.db'});
 
@@ -86,6 +87,20 @@ const GuestListScreen = () => {
     }
   };
 
+  const handleRemoveGuest = id => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'DELETE FROM guests WHERE id = ?',
+        [id],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            setGuests(guests.filter(g => g.id !== id));
+          }
+        },
+      );
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Guest List</Text>
@@ -103,18 +118,25 @@ const GuestListScreen = () => {
         </Pressable>
       </View>
       <ScrollView style={{width: '100%'}}>
-        {guests.map(guest => (
-          <View key={guest.id} style={styles.guestItem}>
-            <Text style={styles.guestName}>{guest.name}</Text>
-            <View style={styles.rsvpContainer}>
-              <Text>RSVP</Text>
-              <Switch
-                value={Boolean(guest.rsvp)}
-                onValueChange={() => toggleRsvp(guest.id)}
-              />
+        {guests.length === 0 ? (
+          <Text style={styles.emptyText}>No guests added yet. Add a guest to get started!</Text>
+        ) : (
+          guests.map(guest => (
+            <View key={guest.id} style={styles.guestItem}>
+              <Text style={styles.guestName}>{guest.name}</Text>
+              <View style={styles.rsvpContainer}>
+                <Text>RSVP</Text>
+                <Switch
+                  value={Boolean(guest.rsvp)}
+                  onValueChange={() => toggleRsvp(guest.id)}
+                />
+                <Pressable style={styles.removeButton} onPress={() => handleRemoveGuest(guest.id)}>
+                  <Ionicons name="trash" size={20} color="white" />
+                </Pressable>
+              </View>
             </View>
-          </View>
-        ))}
+          ))
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -179,6 +201,26 @@ const styles = StyleSheet.create({
   rsvpContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  removeButton: {
+    marginLeft: 10,
+    backgroundColor: '#ff4d4d',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 13,
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 50,
+    fontSize: 16,
+    color: 'gray',
   },
 });
 

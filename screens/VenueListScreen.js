@@ -8,54 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-const venues = [
-  {
-    id: '1',
-    name: 'The Grand Palace',
-    location: 'Mumbai, MH',
-    price: 750000,
-    capacity: 500,
-    image:
-      'https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    id: '2',
-    name: 'Lakeview Gardens',
-    location: 'Udaipur, RJ',
-    price: 1200000,
-    capacity: 300,
-    image:
-      'https://images.pexels.com/photos/2253832/pexels-photo-2253832.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    id: '3',
-    name: 'Royal Orchid',
-    location: 'Bengaluru, KA',
-    price: 500000,
-    capacity: 250,
-    image:
-      'https://images.pexels.com/photos/1485637/pexels-photo-1485637.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    id: '4',
-    name: 'The Leela Palace',
-    location: 'New Delhi, DL',
-    price: 2000000,
-    capacity: 800,
-    image:
-      'https://images.pexels.com/photos/2034335/pexels-photo-2034335.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    id: '5',
-    name: 'Taj Falaknuma Palace',
-    location: 'Hyderabad, TS',
-    price: 2500000,
-    capacity: 400,
-    image:
-      'https://images.pexels.com/photos/2659939/pexels-photo-2659939.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-];
+import venues from '../data/venues';
 
 const VenueListScreen = () => {
   const [budget, setBudget] = useState('');
@@ -98,13 +51,18 @@ const VenueListScreen = () => {
         {filteredVenues.map(venue => (
           <View key={venue.id} style={[styles.card, styles.venueCard]}>
             <Image source={{uri: venue.image}} style={styles.venueImage} />
-            <View style={styles.venueDetails}>
-              <Text style={styles.venueName}>{venue.name}</Text>
-              <Text style={styles.venueInfo}>{venue.location}</Text>
-              <Text style={styles.venueInfo}>Capacity: {venue.capacity}</Text>
-              <Text style={styles.venuePrice}>
-                ₹{venue.price.toLocaleString()}
-              </Text>
+            <View style={styles.venueDetailsRow}>
+              <View style={{flex: 1}}>
+                <Text style={styles.venueName}>{venue.name}</Text>
+                <Text style={styles.venueInfo}>{venue.location}</Text>
+                <Text style={styles.venueInfo}>Capacity: {venue.capacity}</Text>
+                <Text style={styles.venuePrice}>
+                  ₹{venue.price.toLocaleString()}
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.bookButton}>Book Now</Text>
+              </View>
             </View>
           </View>
         ))}
@@ -159,6 +117,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 150,
   },
+  venueDetailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
   venueDetails: {
     padding: 15,
   },
@@ -176,6 +140,22 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#C5A653',
     marginTop: 8,
+  },
+  buttonContainer: {
+    marginLeft: 10,
+    alignItems: 'flex-end',
+  },
+  bookButton: {
+    backgroundColor: '#C5A653',
+    color: 'white',
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 20,
+    fontWeight: 'bold',
+    fontSize: 16,
+    overflow: 'hidden',
+    textAlign: 'center',
+    elevation: 2,
   },
 });
 

@@ -19,6 +19,8 @@ const ChecklistScreen = () => {
   const {userId} = useContext(AuthContext);
   const [checklist, setChecklist] = useState([]);
   const [task, setTask] = useState('');
+  const [editingTask, setEditingTask] = useState(null);
+  const [editValue, setEditValue] = useState('');
 
   // Create table and load checklist
   useLayoutEffect(() => {
@@ -94,6 +96,35 @@ const ChecklistScreen = () => {
     });
   };
 
+  const handleEditTask = item => {
+    setEditingTask(item.id);
+    setEditValue(item.task);
+  };
+
+  const handleSaveEdit = () => {
+    if (editValue.trim() === '') {
+      Alert.alert('Invalid Task', 'Task cannot be empty');
+      return;
+    }
+    db.transaction(tx => {
+      tx.executeSql(
+        'UPDATE checklist set task = ? where id = ?',
+        [editValue, editingTask],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            setChecklist(
+              checklist.map(i =>
+                i.id === editingTask ? {...i, task: editValue} : i,
+              ),
+            );
+            setEditingTask(null);
+            setEditValue('');
+          }
+        },
+      );
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Wedding Checklist</Text>
@@ -110,6 +141,24 @@ const ChecklistScreen = () => {
           <Text style={styles.addButtonText}>Add</Text>
         </Pressable>
       </View>
+      {editingTask && (
+        <View style={styles.editContainer}>
+          <TextInput
+            style={styles.input}
+            value={editValue}
+            onChangeText={setEditValue}
+            placeholder="Edit task"
+            placeholderTextColor={'gray'}
+            color={'black'}
+          />
+          <Pressable onPress={handleSaveEdit} style={styles.addButton}>
+            <Text style={styles.addButtonText}>Save</Text>
+          </Pressable>
+          <Pressable onPress={() => {setEditingTask(null); setEditValue('');}} style={[styles.addButton, {backgroundColor: 'gray'}]}>
+            <Text style={styles.addButtonText}>Cancel</Text>
+          </Pressable>
+        </View>
+      )}
       <ScrollView style={{width: '100%'}}>
         {checklist.length === 0 ? (
           <Text style={styles.emptyText}>Your checklist is empty. Add a task to get started!</Text>
@@ -117,23 +166,32 @@ const ChecklistScreen = () => {
           <View style={styles.section}>
             <View style={styles.card}>
               {checklist.map(item => (
-                <Pressable
-                  key={item.id}
-                  onPress={() => toggleChecklistItem(item.id)}
-                  style={styles.checklistItem}>
-                  <Ionicons
-                    name={item.completed ? 'checkbox' : 'square-outline'}
-                    size={24}
-                    color={item.completed ? '#C5A653' : '#333'}
-                  />
-                  <Text
-                    style={[
-                      styles.checklistText,
-                      item.completed && styles.completedText,
-                    ]}>
-                    {item.task}
-                  </Text>
-                </Pressable>
+                <View key={item.id} style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Pressable
+                    onPress={() => toggleChecklistItem(item.id)}
+                    style={[styles.checklistItem, {flex: 1}]}
+                  >
+                    <Ionicons
+                      name={item.completed ? 'checkbox' : 'square-outline'}
+                      size={24}
+                      color={item.completed ? '#C5A653' : '#333'}
+                    />
+                    <Text
+                      style={[
+                        styles.checklistText,
+                        item.completed && styles.completedText,
+                      ]}
+                    >
+                      {item.task}
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    style={styles.editIcon}
+                    onPress={() => handleEditTask(item)}
+                  >
+                    <Ionicons name="pencil" size={20} color="#C5A653" />
+                  </Pressable>
+                </View>
               ))}
             </View>
           </View>
@@ -215,6 +273,19 @@ const styles = StyleSheet.create({
   completedText: {
     textDecorationLine: 'line-through',
     color: 'grey',
+  },
+  editIcon: {
+    marginLeft: 10,
+    padding: 6,
+    borderRadius: 20,
+    backgroundColor: '#FFF5F7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  editContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 15,
+    marginBottom: 10,
   },
 });
 

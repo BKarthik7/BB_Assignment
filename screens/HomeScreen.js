@@ -13,6 +13,7 @@ import {AuthContext} from '../AuthContext';
 import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import venues from '../data/venues';
 
 const db = openDatabase({name: 'UserDatabase.db'});
 
@@ -21,35 +22,7 @@ const HomeScreen = () => {
   const {userId, setToken} = useContext(AuthContext);
   const [user, setUser] = useState(null);
 
-  const venues = [
-    {
-      id: '1',
-      name: 'The Grand Palace',
-      location: 'Mumbai, MH',
-      price: '₹5,00,000 - ₹10,00,000',
-      capacity: 500,
-      image:
-        'https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-    {
-      id: '2',
-      name: 'Lakeview Gardens',
-      location: 'Udaipur, RJ',
-      price: '₹8,00,000 - ₹15,00,000',
-      capacity: 300,
-      image:
-        'https://images.pexels.com/photos/2253832/pexels-photo-2253832.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-    {
-      id: '3',
-      name: 'Royal Orchid',
-      location: 'Bengaluru, KA',
-      price: '₹3,00,000 - ₹7,00,000',
-      capacity: 250,
-      image:
-        'https://images.pexels.com/photos/1485637/pexels-photo-1485637.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-  ];
+  const featuredVenues = venues.filter(v => v.featured);
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
@@ -110,17 +83,47 @@ const HomeScreen = () => {
         <View style={styles.heroOverlay} />
         <Text style={styles.heroText}>Plan Your Dream Wedding</Text>
       </View>
+      {/* Navigation Section - Horizontal Scroll */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.navScroll}>
+        <View style={styles.navSection}>
+          <Pressable style={styles.navButton} onPress={() => navigation.navigate('Checklist')}>
+            <Ionicons name="list" size={24} color="#C5A653" />
+            <Text style={styles.navButtonText}>Checklist</Text>
+          </Pressable>
+          <Pressable style={styles.navButton} onPress={() => navigation.navigate('Guests')}>
+            <Ionicons name="people" size={24} color="#C5A653" />
+            <Text style={styles.navButtonText}>Guest List</Text>
+          </Pressable>
+          <Pressable style={styles.navButton} onPress={() => navigation.navigate('Venues')}>
+            <Ionicons name="business" size={24} color="#C5A653" />
+            <Text style={styles.navButtonText}>Venues</Text>
+          </Pressable>
+          <Pressable style={styles.navButton} onPress={() => navigation.navigate('Budget')}>
+            <Ionicons name="calculator" size={24} color="#C5A653" />
+            <Text style={styles.navButtonText}>Budget</Text>
+          </Pressable>
+          <Pressable style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
+            <Ionicons name="person" size={24} color="#C5A653" />
+            <Text style={styles.navButtonText}>Profile</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
       {/* Venues Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Featured Venues</Text>
-        {venues.map(venue => (
+        {featuredVenues.map(venue => (
           <View key={venue.id} style={[styles.card, styles.venueCard]}>
             <Image source={{uri: venue.image}} style={styles.venueImage} />
-            <View style={styles.venueDetails}>
-              <Text style={styles.venueName}>{venue.name}</Text>
-              <Text style={styles.venueInfo}>{venue.location}</Text>
-              <Text style={styles.venueInfo}>Capacity: {venue.capacity}</Text>
-              <Text style={styles.venuePrice}>{venue.price}</Text>
+            <View style={styles.venueDetailsRow}>
+              <View style={{flex: 1}}>
+                <Text style={styles.venueName}>{venue.name}</Text>
+                <Text style={styles.venueInfo}>{venue.location}</Text>
+                <Text style={styles.venueInfo}>Capacity: {venue.capacity}</Text>
+                <Text style={styles.venuePrice}>₹{venue.price.toLocaleString()}</Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.bookButton}>Book Now</Text>
+              </View>
             </View>
           </View>
         ))}
@@ -176,12 +179,15 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 15,
+    padding: 0,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    marginHorizontal: 8,
+    marginBottom: 15,
+    overflow: 'hidden',
   },
   checklistItem: {
     flexDirection: 'row',
@@ -197,14 +203,20 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
     color: 'grey',
   },
-  venueCard: {
-    marginBottom: 15,
-    padding: 0,
-    overflow: 'hidden',
-  },
+  venueCard: {},
   venueImage: {
     width: '100%',
     height: 150,
+  },
+  venueDetailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
+  buttonContainer: {
+    marginLeft: 10,
+    alignItems: 'flex-end',
   },
   venueDetails: {
     padding: 15,
@@ -223,5 +235,46 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#C5A653',
     marginTop: 8,
+  },
+  bookButton: {
+    backgroundColor: '#C5A653',
+    color: 'white',
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 20,
+    fontWeight: 'bold',
+    fontSize: 16,
+    overflow: 'hidden',
+    textAlign: 'center',
+    elevation: 2,
+  },
+  navScroll: {
+    marginTop: 10,
+    marginBottom: 10,
+    paddingLeft: 8,
+  },
+  navSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  navButton: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+    marginRight: 12,
+  },
+  navButtonText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#333',
+    fontWeight: 'bold',
   },
 });
