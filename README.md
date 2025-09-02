@@ -2,6 +2,10 @@
 
 A beautiful cross-platform React Native app to help users plan their dream wedding, manage guests, budget, venues, and more. 
 
+## Demo
+
+[Watch the demo video](https://res.cloudinary.com/dfmdv52jr/video/upload/v1756814273/PerfectPromise_ar3kbu.mp4)
+
 ## Features
 
 - **User Authentication**: Secure login and registration with persistent sessions.
