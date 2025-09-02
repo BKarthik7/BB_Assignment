@@ -13,7 +13,7 @@ import FontAwesome from '@react-native-vector-icons/fontawesome';
 import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
 import {useNavigation} from '@react-navigation/native';
 
-import {saveRegistrationProgress} from '../registrationUtils';
+import {saveRegistrationProgress} from '../utils/registrationUtils';
 
 const PasswordScreen = () => {
   const [password, setPassword] = useState('');

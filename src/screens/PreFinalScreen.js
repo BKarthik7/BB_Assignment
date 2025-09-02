@@ -6,8 +6,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {openDatabase} from 'react-native-sqlite-storage';
 import {sign} from 'react-native-pure-jwt';
 
-import {AuthContext, JWT_SECRET_KEY} from '../AuthContext';
-import {getRegistrationProgress} from '../registrationUtils';
+import {AuthContext, JWT_SECRET_KEY} from '../context/AuthContext';
+import {getRegistrationProgress} from '../utils/registrationUtils';
 
 const db = openDatabase({name: 'UserDatabase.db'});
 

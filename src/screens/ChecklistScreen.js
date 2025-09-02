@@ -11,7 +11,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {openDatabase} from 'react-native-sqlite-storage';
-import {AuthContext} from '../AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 const db = openDatabase({name: 'UserDatabase.db'});
 

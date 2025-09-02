@@ -5,7 +5,7 @@ import {
 } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
-import { AuthProvider } from './AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import StackNavigator from './navigation/StackNavigator';
 
 enableScreens();

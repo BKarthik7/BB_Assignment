@@ -14,7 +14,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import {
   getRegistrationProgress,
   saveRegistrationProgress,
-} from '../registrationUtils';
+} from '../utils/registrationUtils';
 
 const NameScreen = () => {
   const [firstName, setFirstName] = useState('');

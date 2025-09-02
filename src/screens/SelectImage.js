@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   getRegistrationProgress,
   saveRegistrationProgress,
-} from '../registrationUtils';
+} from '../utils/registrationUtils';
 
 const SelectImage = () => {
   const navigation = useNavigation();

@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {AuthContext} from '../AuthContext';
+import {AuthContext} from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {openDatabase} from 'react-native-sqlite-storage';
 

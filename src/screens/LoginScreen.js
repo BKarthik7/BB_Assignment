@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {AuthContext, JWT_SECRET_KEY} from '../AuthContext';
+import {AuthContext, JWT_SECRET_KEY} from '../context/AuthContext';
 
 const db = openDatabase({name: 'UserDatabase.db'});
 

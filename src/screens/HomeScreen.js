@@ -9,7 +9,7 @@ import {
 import React, {useLayoutEffect, useState, useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import {AuthContext} from '../AuthContext';
+import {AuthContext} from '../context/AuthContext';
 import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';

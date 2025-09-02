@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   getRegistrationProgress,
   saveRegistrationProgress,
-} from '../registrationUtils';
+} from '../utils/registrationUtils';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');

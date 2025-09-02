@@ -21,7 +21,7 @@ import GuestListScreen from '../screens/GuestListScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 
-import {AuthContext} from '../AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 const StackNavigator = () => {
   console.log('Stack Navigator Rendered');
