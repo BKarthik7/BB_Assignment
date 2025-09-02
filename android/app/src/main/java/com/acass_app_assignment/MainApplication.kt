@@ -1,4 +1,4 @@
-package com.acass_app_assignment
+package com.bb_assignment
 
 import android.app.Application
 import com.facebook.react.PackageList

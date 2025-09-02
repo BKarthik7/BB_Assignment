@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "ACASS_APP_Assignment.app"
-               BlueprintName = "ACASS_APP_Assignment"
-               ReferencedContainer = "container:ACASS_APP_Assignment.xcodeproj">
+               BuildableName = "BB_Assignment.app"
+               BlueprintName = "BB_Assignment"
+               ReferencedContainer = "container:BB_Assignment.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ACASS_APP_AssignmentTests.xctest"
-               BlueprintName = "ACASS_APP_AssignmentTests"
-               ReferencedContainer = "container:ACASS_APP_Assignment.xcodeproj">
+               BuildableName = "BB_AssignmentTests.xctest"
+               BlueprintName = "BB_AssignmentTests"
+               ReferencedContainer = "container:BB_Assignment.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ACASS_APP_Assignment.app"
-            BlueprintName = "ACASS_APP_Assignment"
-            ReferencedContainer = "container:ACASS_APP_Assignment.xcodeproj">
+            BuildableName = "BB_Assignment.app"
+            BlueprintName = "BB_Assignment"
+            ReferencedContainer = "container:BB_Assignment.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ACASS_APP_Assignment.app"
-            BlueprintName = "ACASS_APP_Assignment"
-            ReferencedContainer = "container:ACASS_APP_Assignment.xcodeproj">
+            BuildableName = "BB_Assignment.app"
+            BlueprintName = "BB_Assignment"
+            ReferencedContainer = "container:BB_Assignment.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
